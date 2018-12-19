@@ -12,8 +12,7 @@ class Body extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            // imposto nell'inizializzazione dello state l'array vuoto card. mi serve per metterci dentro il contenuto del json restituitomi dalla fetch 
-            card: [],
+            // imposto nell'inizializzazione dello state l'array vuoto page. mi serve per metterci dentro il contenuto del json restituitomi dalla fetch 
             page: [],
             loading: false
         }
@@ -62,7 +61,7 @@ class Body extends Component {
                         //inizio del map
                         page.data.map((item, idx) =>
                             (
-                                // div principale. gli assegno key, come vuole il map, 
+                                // div principale. gli assegno key, come vuole il map
                                 <div key={`elem-${idx}`}>
 
                                     <Card className="Card">
