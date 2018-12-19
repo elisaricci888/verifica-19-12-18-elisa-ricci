@@ -1,0 +1,9 @@
+.Header {
+    border: 4px solid #f2f2f2;
+    padding-top: 70px;
+    padding-bottom: 80px;
+    color: #f2f2f2;
+    font-size: 36px;
+    letter-spacing: 4px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}

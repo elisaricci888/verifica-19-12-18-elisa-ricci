@@ -1,0 +1,9 @@
+.Footer {
+    border: 4px solid #f2f2f2;
+    padding-top: 40px;
+    padding-bottom: 50px;
+    color: #f2f2f2;
+    font-size: 16px;
+    letter-spacing: 2px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
