@@ -1,68 +1,108 @@
 import React, { Component } from 'react';
-import './Body.css';
+import './Body.css'
+import {
+    Card, CardImg, CardText, CardBody,
+    CardTitle
+} from 'reactstrap';
 
+// loader
+import Loader from 'react-loader-spinner'
 
 class Body extends Component {
     constructor(props) {
         super(props)
         this.state = {
             // imposto nell'inizializzazione dello state l'array vuoto card. mi serve per metterci dentro il contenuto del json restituitomi dalla fetch 
-            card: []
+            card: [],
+            page: [],
+            loading: false
         }
     }
 
     //  dopo che tutto il DOM è montato col contenuto del render, reactjs arriva qui dove definisco la funzione della fetch
     componentDidMount() {
-        this.cardFetch()
+        try {
+            this.setState({ loading: true })
+            setTimeout(() => {
+                this.pageFetch()
+                this.setState({ loading: false })
+            }, 5000)
+        } catch (err) {
+            console.log(err)
+        }
     }
 
     //  chiamo la funzione della fetch
-    cardFetch() {
+    pageFetch() {
+
         fetch('https://jsonplaceholder.typicode.com/photos/1')
             .then(response => response.json())
-            .then(json => this.setState({ card: json }))
+            .then(json => this.setState({ page: json }))
+
+
     }
 
+
+
+
     render() {
-        const { card, loading } = this.state
+        // per non doverlo riscrivere ogni volta
+        const { page, loading } = this.state
         return (
-            //  div padre
+            //div padre
             <div>
-                {(
-                    //  entro dentro il risultato della fetch e poi dentro l'array
-                    card.data &&
-                    //  ciclo i dati restituiti dalla fetch col ciclo map. passo alla funzione due parametri: item mi dà l'oggetto completo, idx mi dà il primo valore di item
-                    card.data.map((item, idx) =>
-                (
-                    //  questo è il mio div principale.
-            <div key={`elem-${idx}`}
+                {loading ?
+                    <Loader
+                        type="Puff"
+                        color="#00BFFF"
+                        height="100"
+                        width="100"
+                    /> : (
+                        page.data &&
+                        //inizio del map
+                        page.data.map((item, idx) =>
+                            (
+                                // div principale. gli assegno key, come vuole il map, 
+                                <div key={`elem-${idx}`}>
 
-                        <Card>
-                <CardBody>
-                    <CardTitle>{item.title}</CardTitle>
-                </CardBody>
-                <CardImg top width="10%" src={item.avatar} alt="Immagine Card" />
-                <CardBody>
-                    <CardText>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla gravida feugiat elementum.</CardText>
-                </CardBody>
-            </Card>
-            
+                                    <Card className="Card">
+                                        <CardBody>
+                                            <CardImg top width="10%" src={item.thumbnailUrl} alt="Card Thumbnail" />
+                                            <CardText>{item.id}</CardText>
+                                            <CardTitle>{item.title}</CardTitle>
+                                            <CardImg top width="10%" src={item.url} alt="Card Image" />
+                                        </CardBody>
+                                    </Card>
 
-            <div>)
-                )
-        //  div padre
-            </div>
-
-
+                                </div>)
+                        )
+                        //chiusura del map
+                    )
+                }
+            </div>//chiusura del div padre
 
 
-
+        )//chiusura return
+    }//chiusura render
+}//chiusura componente
 
 export default Body;
 
 
 
+/*
+LE API LE PRENDO DA QUI:
 
 
+https://jsonplaceholder.typicode.com/photos/1
 
+
+{
+"albumId": 1,
+"id": 1,
+"title": "accusamus beatae ad facilis cum similique qui sunt",
+"url": "https://via.placeholder.com/600/92c952",
+"thumbnailUrl": "https://via.placeholder.com/150/92c952"
+}
+*/
 
